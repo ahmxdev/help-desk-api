@@ -56,4 +56,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $permissions->contains($permission);
     }
+    public function customerTickets()
+    {
+        return $this->hasMany(Ticket::class, 'customer_id');
+    }
+
+    public function agentTickets()
+    {
+        return $this->hasMany(Ticket::class, 'agent_id');
+    }
 }

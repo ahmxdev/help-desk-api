@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -38,8 +39,26 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function customer(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->roles()->attach(
+                Role::where('name', 'customer')->first()
+            );
+        });
+    }
+
+    public function agent(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->roles()->attach(
+                Role::where('name', 'agent')->first()
+            );
+        });
     }
 }
