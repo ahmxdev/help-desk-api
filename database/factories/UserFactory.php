@@ -61,4 +61,13 @@ class UserFactory extends Factory
             );
         });
     }
+
+    public function admin(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->roles()->attach(
+                Role::where('name', 'admin')->first()
+            );
+        });
+    }
 }

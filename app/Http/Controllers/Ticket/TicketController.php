@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ticket;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Resources\Ticket\TicketResource;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -13,9 +14,20 @@ class TicketController extends Controller
     {
         $user = $request->user();
 
-        $tickets = $user->customerTickets()
-            ->with('customer', 'agent')
-            ->get();
+        $tickets = [];
+        if ($user->hasRole('customer')) {
+            $tickets = $user->customerTickets()
+                ->with('customer', 'agent')
+                ->get();
+        } else if ($user->hasRole('agent')) {
+            $tickets = $user->agentTickets()
+                ->with('customer', 'agent')
+                ->get();
+        } else if ($user->hasRole('admin')) {
+            $tickets = Ticket::all();
+        } else {
+            abort(403);
+        }
 
         return TicketResource::collection($tickets);
     }
