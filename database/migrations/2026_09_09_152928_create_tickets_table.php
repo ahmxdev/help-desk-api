@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('subject');
             $table->text('description');
-            $table->enum('priority', ['low', 'medium', 'high']);
-            $table->enum('status', ['open', 'in_progress', 'resolved', 'closed']);
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
+            $table->enum('status', ['open', 'in_progress', 'resolved', 'closed'])->default('open');
             $table->foreignId('customer_id')->constrained('users', 'id')->restrictOnDelete();
             $table->foreignId('agent_id')->nullable()->constrained('users', 'id')->restrictOnDelete();
             $table->timestamps();
