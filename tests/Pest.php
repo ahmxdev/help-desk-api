@@ -17,11 +17,11 @@ use Tests\TestCase;
 
 pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
-    ->beforeEach(function () {
-        $this->seed(RolePermissionSeeder::class);
-    })
     ->in('Feature', 'Unit');
 
+pest()->beforeEach(function () {
+    $this->seed(RolePermissionSeeder::class);
+})->in('Feature');
 /*
 |--------------------------------------------------------------------------
 | Expectations
