@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ticket;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreTicketRequest;
+use App\Http\Resources\Ticket\TicketIndexResource;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -29,7 +30,18 @@ class TicketController extends Controller
             abort(403);
         }
 
-        return TicketResource::collection($tickets);
+        return TicketIndexResource::collection($tickets);
+    }
+
+    public function show(Request $request, Ticket $ticket)
+    {
+        $user = $request->user();
+
+        if ($ticket->customer_id !== $user->id && $ticket->agent_id !== $user->id && ! $user->hasRole('admin')) {
+            abort(403);
+        }
+
+        return new TicketResource($ticket);
     }
 
     public function store(StoreTicketRequest $request)

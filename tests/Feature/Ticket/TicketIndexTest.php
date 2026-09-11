@@ -25,16 +25,8 @@ test('customer can list their tickets', function () {
             '*' => [
                 'id',
                 'subject',
-                'description',
                 'priority',
                 'status',
-
-                'customer' => [
-                    'name',
-                    'email',
-                    'created_at',
-                    'updated_at',
-                ],
 
                 'agent' => [
                     'name',
@@ -44,7 +36,6 @@ test('customer can list their tickets', function () {
                 ],
 
                 'created_at',
-                'updated_at',
             ],
         ],
     ]);
@@ -75,16 +66,8 @@ test('agent can list their tickets', function () {
             '*' => [
                 'id',
                 'subject',
-                'description',
                 'priority',
                 'status',
-
-                'customer' => [
-                    'name',
-                    'email',
-                    'created_at',
-                    'updated_at',
-                ],
 
                 'agent' => [
                     'name',
@@ -94,7 +77,6 @@ test('agent can list their tickets', function () {
                 ],
 
                 'created_at',
-                'updated_at',
             ],
         ],
     ]);
@@ -121,16 +103,8 @@ test('admin can list all tickets', function () {
             '*' => [
                 'id',
                 'subject',
-                'description',
                 'priority',
                 'status',
-
-                'customer' => [
-                    'name',
-                    'email',
-                    'created_at',
-                    'updated_at',
-                ],
 
                 'agent' => [
                     'name',
@@ -140,7 +114,6 @@ test('admin can list all tickets', function () {
                 ],
 
                 'created_at',
-                'updated_at',
             ],
         ],
     ]);
