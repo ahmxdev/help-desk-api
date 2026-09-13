@@ -13,4 +13,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus']);
     Route::patch('/tickets/{ticket}/priority', [TicketController::class, 'updatePriority']);
+
+    Route::patch('/tickets/{ticket}/agent', [TicketController::class, 'assignAgent'])
+        ->middleware('permission:assign-agent');
 });

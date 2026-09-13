@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Ticket;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Ticket\AssignAgentRequest;
 use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Requests\Ticket\UpdatePriorityRequest;
 use App\Http\Requests\Ticket\UpdateStatusRequest;
 use App\Http\Resources\Ticket\TicketIndexResource;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -91,6 +93,23 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => 'The priority has been update.'
+        ], 200);
+    }
+
+    public function assignAgent(AssignAgentRequest $request, Ticket $ticket)
+    {
+        $agent = User::find($request->validated('agent_id'));
+
+        if (! $agent->hasRole('agent')) {
+            abort(403);
+        }
+
+        $ticket->update([
+            'agent_id' => $agent->id
+        ]);
+
+        return response()->json([
+            'message' => 'Agent has been assigned.'
         ], 200);
     }
 }

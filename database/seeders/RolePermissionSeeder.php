@@ -30,12 +30,11 @@ class RolePermissionSeeder extends Seeder
             'name' => 'create-ticket',
         ]);
 
-        $updateTicketStatus = Permission::create([
-            'name' => 'update-ticket-status',
+        $assignAgent = Permission::create([
+            'name' => 'assign-agent',
         ]);
 
         $customerRole->permissions()->attach($createTicket);
-        $agentRole->permissions()->attach($updateTicketStatus);
-        $adminRole->permissions()->attach($updateTicketStatus);
+        $adminRole->permissions()->attach($assignAgent);
     }
 }
