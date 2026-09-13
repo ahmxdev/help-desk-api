@@ -14,15 +14,15 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $customer = Role::create([
+        $customerRole = Role::create([
             'name' => 'customer',
         ]);
 
-        $agent = Role::create([
+        $agentRole = Role::create([
             'name' => 'agent',
         ]);
 
-        $admin = Role::create([
+        $adminRole = Role::create([
             'name' => 'admin',
         ]);
 
@@ -30,6 +30,12 @@ class RolePermissionSeeder extends Seeder
             'name' => 'create-ticket',
         ]);
 
-        $customer->permissions()->attach($createTicket);
+        $updateTicketStatus = Permission::create([
+            'name' => 'update-ticket-status',
+        ]);
+
+        $customerRole->permissions()->attach($createTicket);
+        $agentRole->permissions()->attach($updateTicketStatus);
+        $adminRole->permissions()->attach($updateTicketStatus);
     }
 }

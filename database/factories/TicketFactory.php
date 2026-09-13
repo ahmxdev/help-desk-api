@@ -23,17 +23,10 @@ class TicketFactory extends Factory
         return [
             'subject' => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'priority' => fake()->randomElement([
-                'low',
-                'medium',
-                'high',
-            ]),
-            'status' => fake()->randomElement([
-                'open',
-                'in_progress',
-                'resolved',
-                'closed',
-            ]),
+
+            'priority' => 'low',
+            'status' => 'open',
+
             'customer_id' => User::factory()->customer(),
             'agent_id' => User::factory()->agent(),
         ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ticket;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreTicketRequest;
+use App\Http\Requests\Ticket\UpdateStatusRequest;
 use App\Http\Resources\Ticket\TicketIndexResource;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Models\Ticket;
@@ -55,5 +56,25 @@ class TicketController extends Controller
         return response()->json([
             'message' => 'The ticket has been created.'
         ], 201);
+    }
+
+    public function updateStatus(UpdateStatusRequest $request, Ticket $ticket)
+    {
+        $newStatus = $request->validated('status');
+
+        $user = $request->user();
+        if ($user->hasRole('agent') && $user->id !== $ticket->agent_id) {
+            abort(403);
+        }
+
+        if ($newStatus !== $ticket->status) {
+            $ticket->update([
+                'status' => $newStatus
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'The status has been update.'
+        ], 200);
     }
 }

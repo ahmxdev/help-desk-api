@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['subject', 'description', 'customer_id'])]
+#[Fillable(['subject', 'description', 'customer_id', 'status'])]
 class Ticket extends Model
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
