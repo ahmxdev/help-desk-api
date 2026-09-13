@@ -11,6 +11,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tickets', [TicketController::class, 'store'])
         ->middleware('permission:create-ticket');
 
-    Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])
-        ->middleware('permission:update-ticket-status');
+    Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus']);
 });

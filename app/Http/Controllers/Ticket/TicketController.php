@@ -9,6 +9,7 @@ use App\Http\Resources\Ticket\TicketIndexResource;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TicketController extends Controller
 {
@@ -60,12 +61,9 @@ class TicketController extends Controller
 
     public function updateStatus(UpdateStatusRequest $request, Ticket $ticket)
     {
-        $newStatus = $request->validated('status');
+        Gate::authorize('updateStatus', $ticket);
 
-        $user = $request->user();
-        if ($user->hasRole('agent') && $user->id !== $ticket->agent_id) {
-            abort(403);
-        }
+        $newStatus = $request->validated('status');
 
         if ($newStatus !== $ticket->status) {
             $ticket->update([
