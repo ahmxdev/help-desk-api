@@ -7,7 +7,7 @@ use App\Models\User;
 
 class TicketPolicy
 {
-    public function updateStatus(User $user, Ticket $ticket): bool
+    public function updateTicket(User $user, Ticket $ticket): bool
     {
         return $user->hasRole('admin')
             || (

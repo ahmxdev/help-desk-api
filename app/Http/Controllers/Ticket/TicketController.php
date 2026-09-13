@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ticket;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreTicketRequest;
+use App\Http\Requests\Ticket\UpdatePriorityRequest;
 use App\Http\Requests\Ticket\UpdateStatusRequest;
 use App\Http\Resources\Ticket\TicketIndexResource;
 use App\Http\Resources\Ticket\TicketResource;
@@ -61,7 +62,7 @@ class TicketController extends Controller
 
     public function updateStatus(UpdateStatusRequest $request, Ticket $ticket)
     {
-        Gate::authorize('updateStatus', $ticket);
+        Gate::authorize('updateTicket', $ticket);
 
         $newStatus = $request->validated('status');
 
@@ -73,6 +74,23 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => 'The status has been update.'
+        ], 200);
+    }
+
+    public function updatePriority(UpdatePriorityRequest $request, Ticket $ticket)
+    {
+        Gate::authorize('updateTicket', $ticket);
+
+        $newPriority = $request->validated('priority');
+
+        if ($newPriority !== $ticket->priority) {
+            $ticket->update([
+                'priority' => $newPriority
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'The priority has been update.'
         ], 200);
     }
 }
