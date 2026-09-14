@@ -25,15 +25,8 @@ test('customer can list their tickets', function () {
             '*' => [
                 'id',
                 'subject',
-                'priority',
-                'status',
 
-                'agent' => [
-                    'name',
-                    'email',
-                    'created_at',
-                    'updated_at',
-                ],
+                'agent_name',
 
                 'created_at',
             ],

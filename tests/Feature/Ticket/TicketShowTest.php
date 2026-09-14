@@ -30,8 +30,6 @@ test('customer can show their ticket', function () {
             'id',
             'subject',
             'description',
-            'priority',
-            'status',
 
             'customer' => [
                 'name',
@@ -40,12 +38,7 @@ test('customer can show their ticket', function () {
                 'updated_at',
             ],
 
-            'agent' => [
-                'name',
-                'email',
-                'created_at',
-                'updated_at',
-            ],
+            'agent_name',
 
             'messages' => [
                 '*' => [
@@ -57,7 +50,6 @@ test('customer can show their ticket', function () {
             ],
 
             'created_at',
-            'updated_at',
         ],
     ]);
 
@@ -73,7 +65,7 @@ test('agent can show their ticket', function () {
     Sanctum::actingAs($agent);
 
     $ticket = Ticket::factory()->create([
-        'customer_id' => $agent->id
+        'agent_id' => $agent->id
     ]);
 
     Message::factory()->count(3)->create([

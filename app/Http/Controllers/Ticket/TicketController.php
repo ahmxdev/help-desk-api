@@ -7,6 +7,8 @@ use App\Http\Requests\Ticket\AssignAgentRequest;
 use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Requests\Ticket\UpdatePriorityRequest;
 use App\Http\Requests\Ticket\UpdateStatusRequest;
+use App\Http\Resources\Ticket\CustomerTicketIndexResource;
+use App\Http\Resources\Ticket\CustomerTicketResource;
 use App\Http\Resources\Ticket\TicketIndexResource;
 use App\Http\Resources\Ticket\TicketResource;
 use App\Models\Ticket;
@@ -25,6 +27,8 @@ class TicketController extends Controller
             $tickets = $user->customerTickets()
                 ->with('customer', 'agent')
                 ->get();
+
+            return CustomerTicketIndexResource::collection($tickets);
         } else if ($user->hasRole('agent')) {
             $tickets = $user->agentTickets()
                 ->with('customer', 'agent')
@@ -42,11 +46,14 @@ class TicketController extends Controller
     {
         $user = $request->user();
 
-        if ($ticket->customer_id !== $user->id && $ticket->agent_id !== $user->id && ! $user->hasRole('admin')) {
-            abort(403);
+        if ($ticket->customer_id == $user->id) {
+            return new CustomerTicketResource($ticket);
+        }
+        if ($ticket->agent_id == $user->id || $user->hasRole('admin')) {
+            return new TicketResource($ticket);
         }
 
-        return new TicketResource($ticket);
+        abort(403);
     }
 
     public function store(StoreTicketRequest $request)
