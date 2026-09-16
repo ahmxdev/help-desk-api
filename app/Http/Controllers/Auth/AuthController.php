@@ -24,6 +24,8 @@ class AuthController extends Controller
 
         $user = User::create($data);
 
+        $user->assignRole('customer');
+
         $user->sendEmailVerificationNotification();
 
         return response()->json([
