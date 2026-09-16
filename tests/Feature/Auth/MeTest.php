@@ -23,6 +23,7 @@ test('authenticated user can get their profile', function () {
         'user' => [
             'name',
             'email',
+            'roles',
             'created_at',
             'updated_at',
         ],

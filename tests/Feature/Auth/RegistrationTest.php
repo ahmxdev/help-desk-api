@@ -35,6 +35,7 @@ test('guest can create an account', function () {
         'user' => [
             'name',
             'email',
+            'roles',
             'created_at',
             'updated_at',
         ]

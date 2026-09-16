@@ -36,6 +36,7 @@ test('guest can login', function () {
         'user' => [
             'name',
             'email',
+            'roles',
             'created_at',
             'updated_at',
         ],

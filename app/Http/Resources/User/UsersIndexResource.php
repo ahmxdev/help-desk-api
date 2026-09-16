@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Ticket;
+namespace App\Http\Resources\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerTicketIndexResource extends JsonResource
+class UsersIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,9 @@ class CustomerTicketIndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'subject' => $this->subject,
-
-            'agent_name' => $this->agent ? $this->agent->name : null,
-
-            'created_at' => $this->created_at,
+            'name' => $this->name,
+            'email' => $this->email,
+            'roles' => $this->roles
         ];
     }
 }

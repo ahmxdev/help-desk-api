@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Ticket;
 
 use App\Http\Resources\Message\MessageResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
