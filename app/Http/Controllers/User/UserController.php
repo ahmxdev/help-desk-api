@@ -18,7 +18,6 @@ class UserController extends Controller
     public function setRole(SetUserRoleRequest $request, User $user)
     {
         $roleName = $request->validated('role');
-        $role = Role::where('name', $roleName)->firstOrFail();
 
         if ($user->hasRole('admin')) {
             return response()->json([
@@ -26,8 +25,8 @@ class UserController extends Controller
             ], 403);
         }
 
-        if (! $user->hasRole($role->name)) {
-            $user->roles()->sync([$role->id]);
+        if (! $user->hasRole($roleName)) {
+            $user->assignRole($roleName);
         }
 
         return response()->json([
